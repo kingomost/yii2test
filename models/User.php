@@ -17,6 +17,7 @@ class User extends Model
 	public $pass     		= false;
 	
 	public function user_autorization () {
+		//$real_ip = (new Request())->userIP;
 		if (!is_null(Yii::$app->session->get('autorization'))) //заходит авторизированный пользователь
 		{
 			$row_user = (new Users())->find()->where(['user_ip' => Yii::$app->session->get('autorization')])->one();

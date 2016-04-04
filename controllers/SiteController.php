@@ -9,6 +9,7 @@ use yii\filters\VerbFilter;
 
 use app\models\User;
 use app\models\Users;
+use app\models\Operations;
 use app\models\OperationsForm;
 use app\models\OperationsExpectForm;
 use app\models\OperationsTipRun;
@@ -95,10 +96,8 @@ class SiteController extends Controller
 		if ($id) 
 		{
 			$model = new OperationsExpect ($id);
-			
 			if ($model->load(Yii::$app->request->post())) //это действие - совершение операции 
 			{
-				
 				if (OperationsExpectRun::isset_expect_operation ($this->user_ip, $model->id) && $model->id === $id) {
 					if (!is_null($model->id) && !is_null($model->hidden_reshenie) && !is_null($model->tip)) 
 					{
@@ -144,8 +143,28 @@ class SiteController extends Controller
     {
         $this->user_ip  = (new User())->user_autorization();
 		if (!$this->user_ip) return $this->actionError();
-		
+		$row_user_operation = (new Users())->find()->where(['user_ip' => $this->user_ip])->one();
+		$connect = new \PDO(Yii::$app->db->dsn, Yii::$app->db->username, Yii::$app->db->password);
+		$all_operation_this_user = $connect->query('SELECT operation_id FROM '.$row_user_operation->operation_table.';');
+		$list = [];
+		foreach ($all_operation_this_user as $one_point) {
+			$row_this_operation = (new Operations())->find()->where(['id' => $one_point['operation_id']])->one();
+			if ($row_this_operation->finish_time !== null) {
+				$list[] = [
+								'start_time'		=>$row_this_operation->start_time,
+								'finish_time'		=>$row_this_operation->finish_time,
+								'ip_first'			=>$row_this_operation->ip_first,
+								'ip_second'			=>$row_this_operation->ip_second,
+								'valute'			=>$row_this_operation->valute,
+								'qtip'				=>$row_this_operation->tip,
+								'summa'				=>$row_this_operation->summa,
+								'status'			=>$row_this_operation->status,
+						];
+			}
+		}
+		$list = array_reverse($list);
 		return $this->render('history', [
+											'list'=>$list,
 											'user_ip'=>$this->user_ip,
 											'info'=>$this->info,
 									]);
