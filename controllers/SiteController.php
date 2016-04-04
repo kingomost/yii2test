@@ -105,8 +105,8 @@ class SiteController extends Controller
 						$new_model = new OperationsExpect ($model->id, $model->hidden_reshenie, $model->tip);
 						if ($new_model->load(Yii::$app->request->post()) && $new_model->validate()) 
 						{
-							$obj_do_expect = new OperationsExpectRun($new_model);
-							$this->info = $obj_do_expect->resalt_info();
+							$obj_do_expect = new OperationsExpectRun();
+							$this->info = $obj_do_expect->Run($new_model);
 						}
 						else{
 							$this->info = 'Некорректные данные.';

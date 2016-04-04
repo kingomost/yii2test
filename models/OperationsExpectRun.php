@@ -10,7 +10,6 @@ use app\models\Operations;
 
 class OperationsExpectRun extends Model
 {
-	public  $resalt_info = '';
 	private $data;
 	public $arr_info = [
 							'Невозможно закрыть инициированные вами операции. Это должен сделать второй участник.',
@@ -26,14 +25,14 @@ class OperationsExpectRun extends Model
 					];
 	
 	
-	public function __construct ($model) 
+	public function Run ($model) 
 	{
 		$this->data = $this->return_all_data_one_operation($model->id);
-		if (!$this->qIssetThisUserTable($this->data->ip_first)) $this->resalt_info = $this->arr_info[2];
-		elseif (Yii::$app->session->get('autorization') == $this->data->ip_first) $this->resalt_info = $this->arr_info[0];
-		elseif (Yii::$app->session->get('autorization') !== $this->data->ip_second) $this->resalt_info = $this->arr_info[1];
-		elseif (method_exists ($this, $model->tip)) $this->resalt_info = $this->{$model->tip}($model);
-		else $this->resalt_info = 'Добавлена новая операция или изменено название. На текущий момент есть send, pin, ask. send тут недоступен.';
+		if (!$this->qIssetThisUserTable($this->data->ip_first)) return $this->arr_info[2];
+		elseif (Yii::$app->session->get('autorization') == $this->data->ip_first) return $this->arr_info[0];
+		elseif (Yii::$app->session->get('autorization') !== $this->data->ip_second) return $this->arr_info[1];
+		elseif (method_exists ($this, $model->tip)) return $this->{$model->tip}($model);
+		else return  'Добавлена новая операция или изменено название. На текущий момент есть send, pin, ask. send тут недоступен.';
 	}
 	
 	private function ask ($model) 
@@ -41,7 +40,7 @@ class OperationsExpectRun extends Model
 		if ($model->hidden_reshenie === 'yes') 
 		{
 			$row_second_user = (new Users())->find()->where(['user_ip' => $this->data->ip_second])->one();//это активный соответственно
-			if ($row_second_user->{$this->data->valuta} >= $this->data->summa) 
+			if ($row_second_user->{$this->data->valute} >= $this->data->summa) 
 			{
 				//заберем
 				$row_second_user->{$this->data->valute} -= $this->data->summa;
@@ -56,11 +55,11 @@ class OperationsExpectRun extends Model
 				$metim->save();
 				$metim->finish_time = time();
 				$metim->save();
-				$this->resalt_info = $this->arr_info[4];
+				return $this->arr_info[4];
 			} 
 			else 
 			{
-				$this->resalt_info = $this->arr_info[3];
+				return $this->arr_info[3];
 			}
 		}
 		elseif ($model->hidden_reshenie === 'no')
@@ -68,10 +67,10 @@ class OperationsExpectRun extends Model
 			$metim = Operations::findOne($this->data->id);
 			$metim->finish_time = time();
 			$metim->save();
-			$this->resalt_info = $this->arr_info[5];
+			return $this->arr_info[5];
 		}
 		else{
-			$this->resalt_info = $this->arr_info[7];
+			return $this->arr_info[7];
 		}
 	}
 	
@@ -91,13 +90,11 @@ class OperationsExpectRun extends Model
 				$metim->save();
 				$metim->finish_time = time();
 				$metim->save();
-				$this->resalt_info = $this->arr_info[8];
-				print_r ("Я тут. Сообщение: ");
-				print_r ($this->resalt_info);
+				return $this->arr_info[8];
 			} 
 			else 
 			{
-				$this->resalt_info = $this->arr_info[6];
+				return $this->arr_info[6];
 			}
 		}
 		elseif ($model->hidden_reshenie === 'no')
@@ -110,10 +107,10 @@ class OperationsExpectRun extends Model
 			$metim = Operations::findOne($this->data->id);
 			$metim->finish_time = time();
 			$metim->save();
-			$this->resalt_info = $this->arr_info[9];
+			return $this->arr_info[9];
 		}
 		else{
-			$this->resalt_info = $this->arr_info[7];
+			return $this->arr_info[7];
 		}
 	}
 	
@@ -170,11 +167,6 @@ class OperationsExpectRun extends Model
 	{
 		if (is_null((new Users())->find()->where(['user_ip' => $ip])->one())) return false;
 		return true;
-	}
-	
-	public function resalt_info () 
-	{
-		return $this->resalt_info;
 	}
 	
 }
