@@ -13,7 +13,7 @@ class m160403_165747_operations extends Migration
 												'finish_time' 	=> $this->integer(),
 												'ip_first' 		=> $this->string()->notNull(),
 												'ip_second' 	=> $this->string()->notNull(),
-												'valuta' 		=> $this->string()->notNull(),
+												'valute' 		=> $this->string()->notNull(),
 												'tip' 			=> $this->string()->notNull(),
 												'status' 		=> $this->boolean(),
 												'secret' 		=> $this->string(),

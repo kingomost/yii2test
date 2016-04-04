@@ -7,21 +7,17 @@
 
 use yii\helpers\Html;
 
-$this->title = $name;
 ?>
 <div class="site-error">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <div class="alert alert-danger">
-        <?= nl2br(Html::encode($message)) ?>
+		<h1>ERROR</h1>
     </div>
-
-    <p>
-        The above error occurred while the Web server was processing your request.
-    </p>
-    <p>
-        Please contact us if you think this is a server error. Thank you.
-    </p>
-
+</div>
+<br><br><br>
+<?php if (isset($info) && $info!=='') {?>
+<div class="col-lg-4 col-md-5 col-sm-5 col-xs-6"><h3><b>Info: <?=$info?></b></h3></div>
+<?php } ?>
+<br><br><br>
+<div class="sgsr"  style="text-align: center; padding: 50px 35%; font-size: 30pt;">
+<a href="<?=Yii::$app->urlManager->createUrl(['site',])?>">HOME</a>
 </div>
