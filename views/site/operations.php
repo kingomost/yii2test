@@ -53,12 +53,14 @@ if (isset($model) && isset($valute) && isset($valute_nazvanie) && isset($operati
 <h3><? =$operation_nazvanie ?> <? =$valute_nazvanie ?></h3>
 <br/>
 			<div class="container">	
-				<div class="row" style="height: 120px;">
+				<div class="row" style="height: 110px;">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+						<h3><?= strtoupper($valute) ?></h3>
+					</div>	
 					<?php $form = ActiveForm::begin(['id' => 'operation', 'options' => ['class' => 'fbffdf'],]);?>
 					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
 						<?= $form->field($model, 'ip_second_user')->label('IP:') ?>
 					</div>	
-					
 					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
 						<?= $form->field($model, 'summa')->label('Summa:') ?>
 					</div>	
@@ -75,9 +77,11 @@ if (isset($model) && isset($valute) && isset($valute_nazvanie) && isset($operati
 				<div style="clear: both;"></div>
 				<div class="row">
 					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+					</div>	
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
 						<?= Html::submitButton('ENTER', ['class' => 'btn btn-primary']) ?>
 					</div>	
-				</div>
+				
 					<?= $form->field($model, 'operation')->hiddenInput(['hidden'=>$operation])->label('') ?>
 					<?= $form->field($model, 'valute')->hiddenInput(['hidden'=>$valute])->label('') ?>
 					<?php ActiveForm::end(); ?>

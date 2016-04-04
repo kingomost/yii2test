@@ -11,8 +11,8 @@ use yii\bootstrap\Nav;
 	<div class="container">
 		<div class="row" style="text-align: center;">
 		<h4>Для регистрации (или авторизации если зарегистрирован).</h4><br/>
-		<h4>Поля должны быть IP и совпасть.</h4><br/><br/>
-		<h4>127.1.1.1 127.2.2.2 127.3.3.3 127.4.4.4 127.5.5.5</h4>
+		<h4>Поля должны быть любые валидные IP и совпасть.</h4><br/><br/>
+		<h4>127.1.1.1 127.2.2.2 127.3.3.3 127.4.4.4 127.5.5.5 ...</h4>
 		<?php $form = ActiveForm::begin([
 										'id' => 'autorization',
 										'options' => ['class' => 'hhki'],
