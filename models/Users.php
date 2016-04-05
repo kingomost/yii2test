@@ -27,21 +27,6 @@ class Users extends ActiveRecord
             [['operation_table'], 'unique'],
         ];
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'user_ip' => 'User Ip',
-            'user_pass' => 'User Pass',
-            'operation_table' => 'Operation Table',
-            'dollar' => 'Dollar',
-            'rubl' => 'Rubl',
-            'frank' => 'Frank',
-        ];
-    }
 	
 }
 

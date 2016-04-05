@@ -8,7 +8,7 @@ use yii\db\ActiveRecord;
 use app\models\Users;
 use app\models\Operations;
 
-class OperationsTipRun extends Model
+class OperationsTipRun extends ActiveRecord
 {
 	public $resalt_info = '';
 	public $arr_info = [
@@ -47,15 +47,16 @@ class OperationsTipRun extends Model
 		$operations_I->status 			= false;//тк с первого еще не списали а второму не отдали
 		$operations_I->summa 			= $model->summa;//сумма
 		$operations_I->insert();
+		$ID_OPERATION = $operations_I->getPrimaryKey();
 		$row_first_user->{$model->valute} -= $model->summa;
 		$row_first_user->save();
 		$row_second_user->{$model->valute} += $model->summa;
 		$row_second_user->save();
-		if (! $this->qWritiIdOperationOboim ($operations_I->id, [$row_first_user->operation_table, $row_second_user->operation_table])) 
+		if (! $this->qWritiIdOperationOboim ($ID_OPERATION, [$row_first_user->operation_table, $row_second_user->operation_table])) 
 		{
 			return $this->arr_info[1];
 		} 
-		$buf = Operations::findOne($operations_I->id);
+		$buf = Operations::findOne($ID_OPERATION);
 		$buf->finish_time = time();
 		$buf->save();
 		$buf->status = true;
@@ -81,9 +82,10 @@ class OperationsTipRun extends Model
 		$operations_I->status 			= false;
 		$operations_I->summa 			= $model->summa;
 		$operations_I->insert();
+		$ID_OPERATION = $operations_I->getPrimaryKey();
 		$row_first_user->{$model->valute} -= $model->summa;
 		$row_first_user->save();
-		if (! $this->qWritiIdOperationOboim ($operations_I->id, [$row_first_user->operation_table, $row_second_user->operation_table])) 
+		if (! $this->qWritiIdOperationOboim ($ID_OPERATION, [$row_first_user->operation_table, $row_second_user->operation_table])) 
 		{
 			return $this->arr_info[1];
 		} 
@@ -108,7 +110,8 @@ class OperationsTipRun extends Model
 		$operations_I->status 			= false;
 		$operations_I->summa 			= $model->summa;
 		$operations_I->insert();
-		if (! $this->qWritiIdOperationOboim ($operations_I->id, [$row_first_user->operation_table, $row_second_user->operation_table])) 
+		$ID_OPERATION = $operations_I->getPrimaryKey();
+		if (! $this->qWritiIdOperationOboim ($ID_OPERATION, [$row_first_user->operation_table, $row_second_user->operation_table])) 
 		{
 			return $this->arr_info[1];
 		} 
