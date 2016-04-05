@@ -3,17 +3,32 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveRecord;
 
-class Operations extends ActiveRecord 
+/**
+ * This is the model class for table "operations".
+ *
+ * @property integer $id
+ * @property integer $start_time
+ * @property integer $finish_time
+ * @property string $ip_first
+ * @property string $ip_second
+ * @property string $valute
+ * @property string $tip
+ * @property integer $status
+ * @property string $secret
+ * @property double $summa
+ */
+class Operations extends \yii\db\ActiveRecord
 {
-	
-	public static function tableName()
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
     {
         return 'operations';
     }
-	
-	/**
+
+    /**
      * @inheritdoc
      */
     public function rules()
@@ -44,7 +59,4 @@ class Operations extends ActiveRecord
             'summa' => 'Summa',
         ];
     }
-	
 }
-
-?>

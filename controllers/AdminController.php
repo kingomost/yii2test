@@ -43,7 +43,7 @@ class AdminController extends Controller
 		
 		$searchModel = new OperationsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+		
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

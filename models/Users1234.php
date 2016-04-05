@@ -3,17 +3,28 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveRecord;
 
-class Users extends ActiveRecord 
+/**
+ * This is the model class for table "users".
+ *
+ * @property string $user_ip
+ * @property string $user_pass
+ * @property string $operation_table
+ * @property double $dollar
+ * @property double $rubl
+ * @property double $frank
+ */
+class Users extends \yii\db\ActiveRecord
 {
-	
-	public static function tableName()
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
     {
         return 'users';
     }
-	
-	/**
+
+    /**
      * @inheritdoc
      */
     public function rules()
@@ -42,7 +53,4 @@ class Users extends ActiveRecord
             'frank' => 'Frank',
         ];
     }
-	
 }
-
-?>
