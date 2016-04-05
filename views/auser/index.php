@@ -5,20 +5,20 @@ use yii\grid\GridView;
 use app\addwidgets\Paneladmin;
 use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\OperationsSearch */
+/* @var $searchModel app\models\UsersSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Operations';
+$this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?=Paneladmin::widget()?>
 <div style="clear: both;"></div><hr>
-<div class="operations-index">
+<div class="users-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Operations', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Users', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -26,17 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'id',
-            'start_time:datetime',
-            //'finish_time:datetime',
-            'ip_first',
-            'ip_second',
-			'tip',
-			'summa',
-            'valute',
-            // 'status',
-            // 'secret',
-            
+            'user_ip',
+            //'user_pass',
+            //'operation_table',
+            'dollar',
+            'rubl',
+            'frank',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
